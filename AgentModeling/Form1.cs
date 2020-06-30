@@ -21,7 +21,7 @@ namespace AgentModeling
 
         private void StartButton_Click(object sender, EventArgs e)
         {
-            simulator = new Simulator(8, 7, 5);
+            simulator = new Simulator(15, 7, 4);
 
             var probs = simulator.GetTheoretical();
             chart1.Series[1].Points.Clear();

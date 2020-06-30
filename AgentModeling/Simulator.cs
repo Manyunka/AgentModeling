@@ -121,7 +121,7 @@ namespace AgentModeling
             var ro = CustomerDelay / AgentDelay;
 
             var N = Agents.Length;
-            double[] probs = new double[N];
+            double[] probs = new double[N + 1];
 
             for (int k = 0; k <= N; k++)
             {
@@ -131,7 +131,7 @@ namespace AgentModeling
             probs[0] += Math.Pow(ro, N + 1) / Factorial(N) / (N - ro);
             probs[0] = Math.Pow(probs[0], -1);
 
-            for (int k = 0; k < N; k++)
+            for (int k = 0; k <= N; k++)
             {
                 probs[k] = Math.Pow(ro, k) / Factorial(k) * probs[0];
             }
