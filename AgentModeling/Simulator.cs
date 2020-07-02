@@ -80,17 +80,16 @@ namespace AgentModeling
                     ind = i;
                 }
             }
-
-            if (NextCustomerTime < minT) minT = NextCustomerTime;
-            else Agents[ind].ProcessEvent();
-
-            Time += minT;
+            
+            Agents[ind].ProcessEvent();
 
             foreach (var a in Agents)
             {
                 a.WorkTime -= minT;
-                if (a.WorkTime == 0) a.IsBusy = false;
+                if (a.WorkTime == 0) a.ProcessEvent();
             }
+
+            Time += minT;
         }
 
         static double ExpRV(double lambda)
@@ -100,20 +99,22 @@ namespace AgentModeling
 
         void CustomersGenerator()
         {
-
-            NextCustomerTime += ExpRV(CustomerDelay);
-            NextCustomerTime = Math.Ceiling(NextCustomerTime);
-
-            foreach (var a in Agents)
+            if (NextCustomerTime <= 0)
             {
-                if (!a.IsBusy)
+                NextCustomerTime = Math.Ceiling(ExpRV(CustomerDelay));
+
+                foreach (var a in Agents)
                 {
-                    a.IsBusy = true;
-                    a.WorkTime = Math.Ceiling(ExpRV(AgentDelay));
-                    return;
+                    if (!a.IsBusy)
+                    {
+                        a.IsBusy = true;
+                        a.WorkTime = Math.Ceiling(ExpRV(AgentDelay));
+                        return;
+                    }
                 }
+                Queue++;
             }
-            Queue++;
+            NextCustomerTime--;
         }
 
         public double[] GetTheoretical()
