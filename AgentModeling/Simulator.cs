@@ -89,7 +89,8 @@ namespace AgentModeling
                 if (a.WorkTime == 0) a.ProcessEvent();
             }
 
-            Time += minT;
+            NextCustomerTime += minT > 0 ? minT : 1;
+            Time += minT > 0 ? minT : 1;
         }
 
         static double ExpRV(double lambda)
@@ -114,7 +115,7 @@ namespace AgentModeling
                 }
                 Queue++;
             }
-            NextCustomerTime--;
+            //NextCustomerTime--;
         }
 
         public double[] GetTheoretical()
