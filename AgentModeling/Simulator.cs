@@ -89,7 +89,7 @@ namespace AgentModeling
                 if (a.WorkTime == 0) a.ProcessEvent();
             }
 
-            NextCustomerTime += minT > 0 ? minT : 1;
+            NextCustomerTime -= minT > 0 ? minT : 1;
             Time += minT > 0 ? minT : 1;
         }
 
@@ -115,7 +115,6 @@ namespace AgentModeling
                 }
                 Queue++;
             }
-            //NextCustomerTime--;
         }
 
         public double[] GetTheoretical()
